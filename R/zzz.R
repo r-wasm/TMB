@@ -55,7 +55,8 @@ checkMatrixPackageVersion <- function(warn=TRUE) {
 
 
 .onAttach <- function(lib, pkg) {
+  arch <- R.version$arch
   exfolder <- system.file("examples", package = "TMB")
   dll <- paste0(exfolder, Sys.getenv("R_ARCH"), "/simple", .Platform$dynlib.ext)
-  if(!file.exists(dll)) runExample("simple", dontrun=TRUE, eigen.disable.warnings=FALSE)
+  if(!file.exists(dll) && !arch == "wasm32") runExample("simple", dontrun=TRUE, eigen.disable.warnings=FALSE)
 }
